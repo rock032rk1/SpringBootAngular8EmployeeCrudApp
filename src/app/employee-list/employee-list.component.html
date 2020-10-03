@@ -1,0 +1,183 @@
+<!-- Employee Deleted Message will be print start -->
+<div class="panel panel-default">  
+  <div class="panel-heading">  
+      <h1 style="text-align: center;color: red;">Employee List</h1><br>  
+      <div class="row" [hidden]="!deleteMessage">  
+             
+                <div class="col-sm-4"></div>  
+                <div class="col-sm-4">  
+                        <div class="alert alert-info alert-dismissible">  
+                                <button type="button" class="close" data-dismiss="alert">×</button>  
+                                <strong>Employee Data Deleted</strong>  
+                        </div>  
+                </div>  
+                <div class="col-sm-4"></div>  
+        </div>             
+    </div>
+<!-- Employee Deleted Message will be print end -->    
+
+<!-- Get Employee List One by One start -->
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <!-- <h2>Employee List</h2> -->
+    </div>
+    <div class="panel-body">
+      <table id="example" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped table-bordered table-sm row-border hover" cellspacing="0" width="100%">
+
+        <thead>
+          <tr>
+            <th >Name</th>
+            <th>Mobile</th>
+            <th >Email</th>
+            <th >Department</th>
+            <th >Experience</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees">
+            <td>{{employee.name}}</td>
+            <td>{{employee.mobile}}</td>
+            <td>{{employee.email}}</td>
+            <td>{{employee.department}}</td>
+            <td>{{employee.experience}}</td>
+            
+              <td>
+                <button (click)="deleteEmpById(employee.eid)" class='btn btn-primary'><i class="fa fa-futboll-0">Delete</i></button>&nbsp; 
+                <button (click)="updateEmployee(employee.email)" class='btn btn-info'  
+                    data-toggle="modal" data-target="#myModal">Update</button>&nbsp;
+                <button (click)="getById(employee.eid)" class='btn btn-primary'><i class="fa fa-futboll-0">Profile</i></button>&nbsp;
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal1"><i class="fa fa-futboll-0">New</i></button>        
+              </td>
+          </tr>
+        </tbody><br>
+      </table>
+    </div>
+  </div>
+  <!-- Get Employee List One by One ends -->
+
+
+  <!--Edit Employee Model Form  start-->
+  <div class="modal" id="myModal">  
+    <div class="modal-dialog">  
+      <div class="modal-content">  
+            <form [formGroup]="employeeupdateform" #updemp (ngSubmit)="updateEmpl(updemp)">  
+        <!-- Modal Header -->  
+        <div class="modal-header">  
+          <h4 class="modal-title" style="text-align: center">Update Employee</h4>  
+            
+        </div>  
+          
+        <!-- Modal body -->  
+        <div class="modal-body" *ngFor="let employee of employeelist " >  
+          <div [hidden]="isupdated">  
+
+              <input type="hidden" class="form-control"  formControlName="eid" [(ngModel)]="employee.eid">  
+                      <div class="form-group">  
+                          <label for="name">Employee Name</label>  
+                          <input type="text" class="form-control"  formControlName="name" [(ngModel)]="employee.name"  >  
+                      </div> 
+                      
+                      <div class="form-group">  
+                        <label for="name">Employee Mobile</label>  
+                        <input type="text" class="form-control" formControlName="mobile" [(ngModel)]="employee.mobile">  
+                    </div>
+                
+                      <div class="form-group">  
+                          <label for="name">Employee Email</label>  
+                          <input type="text" class="form-control" formControlName="email" [(ngModel)]="employee.email">  
+                      </div> 
+                      
+                      <div class="form-group">  
+                        <label for="name">Employee Department</label>  
+                        <input type="text" class="form-control" formControlName="department" [(ngModel)]="employee.department">  
+                    </div>
+
+                    <div class="form-group">  
+                      <label for="name">Employee Experience</label>  
+                      <input type="number" class="form-control" formControlName="experience" [(ngModel)]="employee.experience">  
+                  </div>
+                
+                                         
+            </div>    
+            <div [hidden]="!isupdated">  
+                <h5 style="color: green;">Employee Detail Updated!</h5>  
+            </div>          
+                
+      </div>
+          
+        <!-- Modal footer -->  
+        <div class="modal-footer" >  
+          <button type="submit" class="btn btn-success" [hidden]="isupdated">Update</button>  
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="changeisUpdate()">Close</button>  
+        </div>  
+          
+    </form>  
+      </div>  
+    </div>  
+  </div>
+<!--Edit Employee Model Form  End-->
+
+
+   <!--Add Employee Model Form  start-->
+   <div class="modal" id="myModal1">  
+    <div class="modal-dialog">  
+      <div class="modal-content">  
+            <form [formGroup]="addemployeeform" #addemp (ngSubmit)="addEmpl(addemp)">  
+        <!-- Modal Header -->  
+        <div class="modal-header">  
+          <h4 class="modal-title" style="text-align: center">Add Employee</h4>  
+            
+        </div>  
+          
+        <!-- Modal body -->  
+        <div class="modal-body">  
+          <div [hidden]="isupdated">  
+
+              <input type="hidden" class="form-control"  formControlName="eid" [(ngModel)]="employee.eid">  
+                      <div class="form-group">  
+                          <label for="name">Employee Name</label>  
+                          <input type="text" class="form-control"  formControlName="name" [(ngModel)]="employee.name"  >  
+                      </div> 
+                      
+                      <div class="form-group">  
+                        <label for="name">Employee Mobile</label>  
+                        <input type="text" class="form-control" formControlName="mobile" [(ngModel)]="employee.mobile">  
+                    </div>
+                
+                      <div class="form-group">  
+                          <label for="name">Employee Email</label>  
+                          <input type="text" class="form-control" formControlName="email" [(ngModel)]="employee.email">  
+                      </div> 
+                      
+                      <div class="form-group">  
+                        <label for="name">Employee Department</label>  
+                        <input type="text" class="form-control" formControlName="department" [(ngModel)]="employee.department">  
+                    </div>
+
+                    <div class="form-group">  
+                      <label for="name">Employee Experience</label>  
+                      <input type="number" class="form-control" formControlName="experience" [(ngModel)]="employee.experience">  
+                  </div>
+                
+                                         
+            </div>    
+            <div [hidden]="!isupdated">  
+                <h5 style="color: green;">Employee Added Successfully!</h5>  
+            </div>          
+                
+      </div>
+          
+        <!-- Modal footer -->  
+        <div class="modal-footer" >  
+          <button type="submit" class="btn btn-success" [hidden]="isupdated">Save</button>  
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="changeisAdded()">Close</button>  
+        </div>  
+          
+    </form>  
+      </div>  
+    </div>  
+  </div>
+   <!--Add Employee Model Form  ends-->
+
+  
